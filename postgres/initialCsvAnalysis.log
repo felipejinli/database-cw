@@ -1,0 +1,159 @@
+Analyzing imdbDirectors.csv
+
+Descriptive statistics:
+              imdbId director_name
+count   1.103000e+04         11030
+unique           NaN          4655
+top              NaN   Woody Allen
+freq             NaN            48
+mean    6.929110e+05           NaN
+std     1.120727e+06           NaN
+min     4.170000e+02           NaN
+25%     9.475575e+04           NaN
+50%     1.790545e+05           NaN
+75%     8.424560e+05           NaN
+max     8.391976e+06           NaN
+Analyzing links.csv
+
+Descriptive statistics:
+             movieId        imdbId         tmdbId
+count    9742.000000  9.742000e+03    9734.000000
+mean    42200.353623  6.771839e+05   55162.123793
+std     52160.494854  1.107228e+06   93653.481487
+min         1.000000  4.170000e+02       2.000000
+25%      3248.250000  9.518075e+04    9665.500000
+50%      7300.000000  1.672605e+05   16529.000000
+75%     76232.000000  8.055685e+05   44205.750000
+max    193609.000000  8.391976e+06  525662.000000
+Analyzing personality-ratings.csv
+
+Descriptive statistics:
+                                  userid        movieid         rating             timestamp 
+count                             920264  920264.000000  920264.000000                 920264
+unique                              1820            NaN            NaN                 865154
+top     1a4926479ca0b4c42df6cefb89aa59d9            NaN            NaN   2016-04-23 12:32:53 
+freq                                5400            NaN            NaN                     81
+mean                                 NaN   35529.413973       3.396486                    NaN
+std                                  NaN   44640.776109       1.005792                    NaN
+min                                  NaN       1.000000       0.500000                    NaN
+25%                                  NaN    2329.000000       3.000000                    NaN
+50%                                  NaN    6380.000000       3.500000                    NaN
+75%                                  NaN   66097.000000       4.000000                    NaN
+max                                  NaN  191005.000000       5.000000                    NaN
+Analyzing imdbBasics.csv
+
+Descriptive statistics:
+              imdbId titleType       primaryTitle      originalTitle    startYear  runtimeMinutes
+count   9.723000e+03      9723               9723               9723  9723.000000     9721.000000
+unique           NaN         9               9377               9422          NaN             NaN
+top              NaN     movie  A Christmas Carol  A Christmas Carol          NaN             NaN
+freq             NaN      9076                  6                  5          NaN             NaN
+mean    6.755518e+05       NaN                NaN                NaN  1994.608557      105.354182
+std     1.102903e+06       NaN                NaN                NaN    18.536919       30.391187
+min     4.170000e+02       NaN                NaN                NaN  1902.000000        2.000000
+25%     9.517150e+04       NaN                NaN                NaN  1988.000000       92.000000
+50%     1.668960e+05       NaN                NaN                NaN  1999.000000      102.000000
+75%     8.045475e+05       NaN                NaN                NaN  2008.000000      115.000000
+max     8.391976e+06       NaN                NaN                NaN  2018.000000      780.000000
+Analyzing tags.csv
+
+Descriptive statistics:
+             userId        movieId               tag     timestamp
+count   3683.000000    3683.000000              3683  3.683000e+03
+unique          NaN            NaN              1589           NaN
+top             NaN            NaN  In Netflix queue           NaN
+freq            NaN            NaN               131           NaN
+mean     431.149335   27252.013576               NaN  1.320032e+09
+std      158.472553   43490.558803               NaN  1.721025e+08
+min        2.000000       1.000000               NaN  1.137179e+09
+25%      424.000000    1262.500000               NaN  1.137521e+09
+50%      474.000000    4454.000000               NaN  1.269833e+09
+75%      477.000000   39263.000000               NaN  1.498457e+09
+max      610.000000  193565.000000               NaN  1.537099e+09
+Analyzing genres.csv
+
+Descriptive statistics:
+              movieId  genre
+count    22084.000000  22084
+unique            NaN     20
+top               NaN  Drama
+freq              NaN   4361
+mean     42651.233744    NaN
+std      50933.389147    NaN
+min          1.000000    NaN
+25%       3389.000000    NaN
+50%       8044.500000    NaN
+75%      76175.000000    NaN
+max     193609.000000    NaN
+Analyzing ratings.csv
+
+Descriptive statistics:
+              userId        movieId         rating     timestamp
+count  100836.000000  100836.000000  100836.000000  1.008360e+05
+mean      326.127564   19435.295718       3.501557  1.205946e+09
+std       182.618491   35530.987199       1.042529  2.162610e+08
+min         1.000000       1.000000       0.500000  8.281246e+08
+25%       177.000000    1199.000000       3.000000  1.019124e+09
+50%       325.000000    2991.000000       3.500000  1.186087e+09
+75%       477.000000    8122.000000       4.000000  1.435994e+09
+max       610.000000  193609.000000       5.000000  1.537799e+09
+Analyzing personality-data.csv
+
+Descriptive statistics:
+                                  userid     openness   agreeableness   emotional_stability   conscientiousness   extraversion  assigned_metric  assigned_condition   is_personalized   enjoy_watching 
+count                               1820  1820.000000     1820.000000           1820.000000         1820.000000    1820.000000             1820                1820       1820.000000       1820.000000
+unique                              1820          NaN             NaN                   NaN                 NaN            NaN                4                   4               NaN               NaN
+top     8e7cebf9a234c064b75016249f2ac65e          NaN             NaN                   NaN                 NaN            NaN       popularity                high               NaN               NaN
+freq                                   1          NaN             NaN                   NaN                 NaN            NaN              573                 551               NaN               NaN
+mean                                 NaN     5.372802        4.215385              4.564011            4.664011       3.480220              NaN                 NaN          3.057143          3.525275
+std                                  NaN     1.045371        1.138938              1.396964            1.315383       1.470675              NaN                 NaN          1.080604          1.055324
+min                                  NaN     1.000000        1.000000              1.000000            1.000000       1.000000              NaN                 NaN          1.000000          1.000000
+25%                                  NaN     4.500000        3.500000              3.500000            4.000000       2.500000              NaN                 NaN          2.000000          3.000000
+50%                                  NaN     5.500000        4.000000              4.500000            4.500000       3.500000              NaN                 NaN          3.000000          4.000000
+75%                                  NaN     6.000000        5.000000              5.500000            5.500000       4.500000              NaN                 NaN          4.000000          4.000000
+max                                  NaN     7.000000        7.000000              7.000000            7.000000       7.000000              NaN                 NaN          5.000000          5.000000
+Analyzing movies.csv
+
+Descriptive statistics:
+              movieId        title
+count     9742.000000         9742
+unique            NaN         9737
+top               NaN  Emma (1996)
+freq              NaN            2
+mean     42200.353623          NaN
+std      52160.494854          NaN
+min          1.000000          NaN
+25%       3248.250000          NaN
+50%       7300.000000          NaN
+75%      76232.000000          NaN
+max     193609.000000          NaN
+Analyzing personalityPredictedRating.csv
+
+Descriptive statistics:
+                                  userid        movieid  predicted_rating
+count                              19175   19175.000000      19175.000000
+unique                              1817            NaN               NaN
+top     4638502dc978788ec9d44e64e43a6757            NaN               NaN
+freq                                  99            NaN               NaN
+mean                                 NaN   38460.641356          4.309870
+std                                  NaN   43799.792306          0.375615
+min                                  NaN       1.000000          2.313341
+25%                                  NaN    1288.000000          4.061340
+50%                                  NaN    6870.000000          4.309448
+75%                                  NaN   85342.000000          4.563379
+max                                  NaN  142115.000000          6.585588
+Analyzing imdbActors.csv
+
+Descriptive statistics:
+              imdbId      ordering      actor_name category characters
+count   3.749100e+04  37491.000000           37491    37491      37373
+unique           NaN           NaN           14842        2      28130
+top              NaN           NaN  Robert De Niro    actor   Narrator
+freq             NaN           NaN              61    24410         97
+mean    6.290322e+05      2.584594             NaN      NaN        NaN
+std     1.020388e+06      1.325222             NaN      NaN        NaN
+min     4.170000e+02      1.000000             NaN      NaN        NaN
+25%     9.364000e+04      2.000000             NaN      NaN        NaN
+50%     1.447150e+05      3.000000             NaN      NaN        NaN
+75%     4.917470e+05      4.000000             NaN      NaN        NaN
+max     8.391976e+06     10.000000             NaN      NaN        NaN

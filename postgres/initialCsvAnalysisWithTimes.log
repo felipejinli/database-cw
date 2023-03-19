@@ -1,0 +1,431 @@
+2023-03-19 13:19:39,734 - INFO - Analyzing imdbDirectors.csv
+2023-03-19 13:19:39,737 - INFO - Data types and missing values:
+2023-03-19 13:19:39,739 - INFO - <class 'pandas.core.frame.DataFrame'>
+RangeIndex: 11030 entries, 0 to 11029
+Data columns (total 2 columns):
+ #   Column         Non-Null Count  Dtype 
+---  ------         --------------  ----- 
+ 0   imdbId         11030 non-null  int64 
+ 1   director_name  11030 non-null  object
+dtypes: int64(1), object(1)
+memory usage: 172.5+ KB
+
+2023-03-19 13:19:39,739 - INFO - 
+Descriptive statistics:
+2023-03-19 13:19:39,742 - INFO -               imdbId director_name
+count   1.103000e+04         11030
+unique           NaN          4655
+top              NaN   Woody Allen
+freq             NaN            48
+mean    6.929110e+05           NaN
+std     1.120727e+06           NaN
+min     4.170000e+02           NaN
+25%     9.475575e+04           NaN
+50%     1.790545e+05           NaN
+75%     8.424560e+05           NaN
+max     8.391976e+06           NaN
+2023-03-19 13:19:39,743 - INFO - 
+Unique values:
+2023-03-19 13:19:39,744 - INFO - imdbId: 9723
+2023-03-19 13:19:39,744 - INFO - director_name: 4655
+2023-03-19 13:19:39,744 - INFO - 
+Duplicate rows:
+2023-03-19 13:19:39,745 - INFO - No duplicate rows found.
+2023-03-19 13:19:39,746 - INFO - Analyzing links.csv
+2023-03-19 13:19:39,747 - INFO - Data types and missing values:
+2023-03-19 13:19:39,748 - INFO - <class 'pandas.core.frame.DataFrame'>
+RangeIndex: 9742 entries, 0 to 9741
+Data columns (total 3 columns):
+ #   Column   Non-Null Count  Dtype  
+---  ------   --------------  -----  
+ 0   movieId  9742 non-null   int64  
+ 1   imdbId   9742 non-null   int64  
+ 2   tmdbId   9734 non-null   float64
+dtypes: float64(1), int64(2)
+memory usage: 228.5 KB
+
+2023-03-19 13:19:39,749 - INFO - 
+Descriptive statistics:
+2023-03-19 13:19:39,751 - INFO -              movieId        imdbId         tmdbId
+count    9742.000000  9.742000e+03    9734.000000
+mean    42200.353623  6.771839e+05   55162.123793
+std     52160.494854  1.107228e+06   93653.481487
+min         1.000000  4.170000e+02       2.000000
+25%      3248.250000  9.518075e+04    9665.500000
+50%      7300.000000  1.672605e+05   16529.000000
+75%     76232.000000  8.055685e+05   44205.750000
+max    193609.000000  8.391976e+06  525662.000000
+2023-03-19 13:19:39,752 - INFO - 
+Unique values:
+2023-03-19 13:19:39,752 - INFO - movieId: 9742
+2023-03-19 13:19:39,752 - INFO - imdbId: 9742
+2023-03-19 13:19:39,753 - INFO - tmdbId: 9733
+2023-03-19 13:19:39,753 - INFO - 
+Duplicate rows:
+2023-03-19 13:19:39,754 - INFO - No duplicate rows found.
+2023-03-19 13:19:39,754 - INFO - Analyzing personality-ratings.csv
+2023-03-19 13:19:40,196 - INFO - Data types and missing values:
+2023-03-19 13:19:40,305 - INFO - <class 'pandas.core.frame.DataFrame'>
+RangeIndex: 920264 entries, 0 to 920263
+Data columns (total 4 columns):
+ #   Column       Non-Null Count   Dtype  
+---  ------       --------------   -----  
+ 0   userid       920264 non-null  object 
+ 1    movieid     920264 non-null  int64  
+ 2    rating      920264 non-null  float64
+ 3    timestamp   920264 non-null  object 
+dtypes: float64(1), int64(1), object(2)
+memory usage: 28.1+ MB
+
+2023-03-19 13:19:40,305 - INFO - 
+Descriptive statistics:
+2023-03-19 13:19:40,693 - INFO -                                   userid        movieid         rating             timestamp 
+count                             920264  920264.000000  920264.000000                 920264
+unique                              1820            NaN            NaN                 865154
+top     1a4926479ca0b4c42df6cefb89aa59d9            NaN            NaN   2016-04-23 12:32:53 
+freq                                5400            NaN            NaN                     81
+mean                                 NaN   35529.413973       3.396486                    NaN
+std                                  NaN   44640.776109       1.005792                    NaN
+min                                  NaN       1.000000       0.500000                    NaN
+25%                                  NaN    2329.000000       3.000000                    NaN
+50%                                  NaN    6380.000000       3.500000                    NaN
+75%                                  NaN   66097.000000       4.000000                    NaN
+max                                  NaN  191005.000000       5.000000                    NaN
+2023-03-19 13:19:40,695 - INFO - 
+Unique values:
+2023-03-19 13:19:40,735 - INFO - userid: 1820
+2023-03-19 13:19:40,738 - INFO -  movieid: 9551
+2023-03-19 13:19:40,742 - INFO -  rating: 10
+2023-03-19 13:19:40,839 - INFO -  timestamp : 865154
+2023-03-19 13:19:40,839 - INFO - 
+Duplicate rows:
+2023-03-19 13:19:40,993 - INFO - 7621 duplicate rows found:
+2023-03-19 13:19:40,993 - INFO -                                   userid   movieid   rating             timestamp 
+101     4638502dc978788ec9d44e64e43a6757         1      3.5   2015-07-20 14:59:01 
+102     4638502dc978788ec9d44e64e43a6757         1      3.5   2015-07-20 14:59:01 
+103     4638502dc978788ec9d44e64e43a6757         1      3.5   2015-07-20 14:59:01 
+104     4638502dc978788ec9d44e64e43a6757         1      3.5   2015-07-20 14:59:01 
+105     4638502dc978788ec9d44e64e43a6757         1      3.5   2015-07-20 14:59:01 
+...                                  ...       ...      ...                    ...
+918099  9ba0ccf0a69ae15c85d1b289baa4d494     64167      4.0   2015-04-03 22:30:40 
+918284  9ba0ccf0a69ae15c85d1b289baa4d494    148775      4.0   2016-08-25 07:52:37 
+919285  9ba0ccf0a69ae15c85d1b289baa4d494     93008      3.5   2016-05-05 21:31:01 
+919372  5e82ce34f999ec0dbd2859b8b04dfcbf     84844      3.5   2018-01-05 03:54:18 
+919913  75a54727bffcbbb561da9d3eb604f28e     87960      3.5   2015-10-17 21:24:06 
+
+[7621 rows x 4 columns]
+2023-03-19 13:19:41,003 - INFO - Analyzing imdbBasics.csv
+2023-03-19 13:19:41,010 - INFO - Data types and missing values:
+2023-03-19 13:19:41,013 - INFO - <class 'pandas.core.frame.DataFrame'>
+RangeIndex: 9723 entries, 0 to 9722
+Data columns (total 6 columns):
+ #   Column          Non-Null Count  Dtype  
+---  ------          --------------  -----  
+ 0   imdbId          9723 non-null   int64  
+ 1   titleType       9723 non-null   object 
+ 2   primaryTitle    9723 non-null   object 
+ 3   originalTitle   9723 non-null   object 
+ 4   startYear       9723 non-null   int64  
+ 5   runtimeMinutes  9721 non-null   float64
+dtypes: float64(1), int64(2), object(3)
+memory usage: 455.9+ KB
+
+2023-03-19 13:19:41,013 - INFO - 
+Descriptive statistics:
+2023-03-19 13:19:41,021 - INFO -               imdbId titleType       primaryTitle      originalTitle    startYear  runtimeMinutes
+count   9.723000e+03      9723               9723               9723  9723.000000     9721.000000
+unique           NaN         9               9377               9422          NaN             NaN
+top              NaN     movie  A Christmas Carol  A Christmas Carol          NaN             NaN
+freq             NaN      9076                  6                  5          NaN             NaN
+mean    6.755518e+05       NaN                NaN                NaN  1994.608557      105.354182
+std     1.102903e+06       NaN                NaN                NaN    18.536919       30.391187
+min     4.170000e+02       NaN                NaN                NaN  1902.000000        2.000000
+25%     9.517150e+04       NaN                NaN                NaN  1988.000000       92.000000
+50%     1.668960e+05       NaN                NaN                NaN  1999.000000      102.000000
+75%     8.045475e+05       NaN                NaN                NaN  2008.000000      115.000000
+max     8.391976e+06       NaN                NaN                NaN  2018.000000      780.000000
+2023-03-19 13:19:41,023 - INFO - 
+Unique values:
+2023-03-19 13:19:41,023 - INFO - imdbId: 9723
+2023-03-19 13:19:41,024 - INFO - titleType: 9
+2023-03-19 13:19:41,024 - INFO - primaryTitle: 9377
+2023-03-19 13:19:41,025 - INFO - originalTitle: 9422
+2023-03-19 13:19:41,025 - INFO - startYear: 106
+2023-03-19 13:19:41,026 - INFO - runtimeMinutes: 251
+2023-03-19 13:19:41,026 - INFO - 
+Duplicate rows:
+2023-03-19 13:19:41,028 - INFO - No duplicate rows found.
+2023-03-19 13:19:41,028 - INFO - Analyzing tags.csv
+2023-03-19 13:19:41,029 - INFO - Data types and missing values:
+2023-03-19 13:19:41,031 - INFO - <class 'pandas.core.frame.DataFrame'>
+RangeIndex: 3683 entries, 0 to 3682
+Data columns (total 4 columns):
+ #   Column     Non-Null Count  Dtype 
+---  ------     --------------  ----- 
+ 0   userId     3683 non-null   int64 
+ 1   movieId    3683 non-null   int64 
+ 2   tag        3683 non-null   object
+ 3   timestamp  3683 non-null   int64 
+dtypes: int64(3), object(1)
+memory usage: 115.2+ KB
+
+2023-03-19 13:19:41,031 - INFO - 
+Descriptive statistics:
+2023-03-19 13:19:41,033 - INFO -              userId        movieId               tag     timestamp
+count   3683.000000    3683.000000              3683  3.683000e+03
+unique          NaN            NaN              1589           NaN
+top             NaN            NaN  In Netflix queue           NaN
+freq            NaN            NaN               131           NaN
+mean     431.149335   27252.013576               NaN  1.320032e+09
+std      158.472553   43490.558803               NaN  1.721025e+08
+min        2.000000       1.000000               NaN  1.137179e+09
+25%      424.000000    1262.500000               NaN  1.137521e+09
+50%      474.000000    4454.000000               NaN  1.269833e+09
+75%      477.000000   39263.000000               NaN  1.498457e+09
+max      610.000000  193565.000000               NaN  1.537099e+09
+2023-03-19 13:19:41,035 - INFO - 
+Unique values:
+2023-03-19 13:19:41,035 - INFO - userId: 58
+2023-03-19 13:19:41,035 - INFO - movieId: 1572
+2023-03-19 13:19:41,035 - INFO - tag: 1589
+2023-03-19 13:19:41,035 - INFO - timestamp: 3411
+2023-03-19 13:19:41,035 - INFO - 
+Duplicate rows:
+2023-03-19 13:19:41,036 - INFO - No duplicate rows found.
+2023-03-19 13:19:41,036 - INFO - Analyzing genres.csv
+2023-03-19 13:19:41,039 - INFO - Data types and missing values:
+2023-03-19 13:19:41,041 - INFO - <class 'pandas.core.frame.DataFrame'>
+RangeIndex: 22084 entries, 0 to 22083
+Data columns (total 2 columns):
+ #   Column   Non-Null Count  Dtype 
+---  ------   --------------  ----- 
+ 0   movieId  22084 non-null  int64 
+ 1   genre    22084 non-null  object
+dtypes: int64(1), object(1)
+memory usage: 345.2+ KB
+
+2023-03-19 13:19:41,041 - INFO - 
+Descriptive statistics:
+2023-03-19 13:19:41,044 - INFO -               movieId  genre
+count    22084.000000  22084
+unique            NaN     20
+top               NaN  Drama
+freq              NaN   4361
+mean     42651.233744    NaN
+std      50933.389147    NaN
+min          1.000000    NaN
+25%       3389.000000    NaN
+50%       8044.500000    NaN
+75%      76175.000000    NaN
+max     193609.000000    NaN
+2023-03-19 13:19:41,044 - INFO - 
+Unique values:
+2023-03-19 13:19:41,045 - INFO - movieId: 9742
+2023-03-19 13:19:41,046 - INFO - genre: 20
+2023-03-19 13:19:41,046 - INFO - 
+Duplicate rows:
+2023-03-19 13:19:41,047 - INFO - No duplicate rows found.
+2023-03-19 13:19:41,047 - INFO - Analyzing ratings.csv
+2023-03-19 13:19:41,061 - INFO - Data types and missing values:
+2023-03-19 13:19:41,063 - INFO - <class 'pandas.core.frame.DataFrame'>
+RangeIndex: 100836 entries, 0 to 100835
+Data columns (total 4 columns):
+ #   Column     Non-Null Count   Dtype  
+---  ------     --------------   -----  
+ 0   userId     100836 non-null  int64  
+ 1   movieId    100836 non-null  int64  
+ 2   rating     100836 non-null  float64
+ 3   timestamp  100836 non-null  int64  
+dtypes: float64(1), int64(3)
+memory usage: 3.1 MB
+
+2023-03-19 13:19:41,063 - INFO - 
+Descriptive statistics:
+2023-03-19 13:19:41,069 - INFO -               userId        movieId         rating     timestamp
+count  100836.000000  100836.000000  100836.000000  1.008360e+05
+mean      326.127564   19435.295718       3.501557  1.205946e+09
+std       182.618491   35530.987199       1.042529  2.162610e+08
+min         1.000000       1.000000       0.500000  8.281246e+08
+25%       177.000000    1199.000000       3.000000  1.019124e+09
+50%       325.000000    2991.000000       3.500000  1.186087e+09
+75%       477.000000    8122.000000       4.000000  1.435994e+09
+max       610.000000  193609.000000       5.000000  1.537799e+09
+2023-03-19 13:19:41,070 - INFO - 
+Unique values:
+2023-03-19 13:19:41,071 - INFO - userId: 610
+2023-03-19 13:19:41,071 - INFO - movieId: 9724
+2023-03-19 13:19:41,072 - INFO - rating: 10
+2023-03-19 13:19:41,073 - INFO - timestamp: 85043
+2023-03-19 13:19:41,073 - INFO - 
+Duplicate rows:
+2023-03-19 13:19:41,078 - INFO - No duplicate rows found.
+2023-03-19 13:19:41,078 - INFO - Analyzing personality-data.csv
+2023-03-19 13:19:41,080 - INFO - Data types and missing values:
+2023-03-19 13:19:41,082 - INFO - <class 'pandas.core.frame.DataFrame'>
+RangeIndex: 1820 entries, 0 to 1819
+Data columns (total 10 columns):
+ #   Column                Non-Null Count  Dtype  
+---  ------                --------------  -----  
+ 0   userid                1820 non-null   object 
+ 1    openness             1820 non-null   float64
+ 2    agreeableness        1820 non-null   float64
+ 3    emotional_stability  1820 non-null   float64
+ 4    conscientiousness    1820 non-null   float64
+ 5    extraversion         1820 non-null   float64
+ 6    assigned_metric      1820 non-null   object 
+ 7    assigned_condition   1820 non-null   object 
+ 8    is_personalized      1820 non-null   int64  
+ 9    enjoy_watching       1820 non-null   int64  
+dtypes: float64(5), int64(2), object(3)
+memory usage: 142.3+ KB
+
+2023-03-19 13:19:41,082 - INFO - 
+Descriptive statistics:
+2023-03-19 13:19:41,087 - INFO -                                   userid     openness   agreeableness   emotional_stability   conscientiousness   extraversion  assigned_metric  assigned_condition   is_personalized   enjoy_watching 
+count                               1820  1820.000000     1820.000000           1820.000000         1820.000000    1820.000000             1820                1820       1820.000000       1820.000000
+unique                              1820          NaN             NaN                   NaN                 NaN            NaN                4                   4               NaN               NaN
+top     8e7cebf9a234c064b75016249f2ac65e          NaN             NaN                   NaN                 NaN            NaN       popularity                high               NaN               NaN
+freq                                   1          NaN             NaN                   NaN                 NaN            NaN              573                 551               NaN               NaN
+mean                                 NaN     5.372802        4.215385              4.564011            4.664011       3.480220              NaN                 NaN          3.057143          3.525275
+std                                  NaN     1.045371        1.138938              1.396964            1.315383       1.470675              NaN                 NaN          1.080604          1.055324
+min                                  NaN     1.000000        1.000000              1.000000            1.000000       1.000000              NaN                 NaN          1.000000          1.000000
+25%                                  NaN     4.500000        3.500000              3.500000            4.000000       2.500000              NaN                 NaN          2.000000          3.000000
+50%                                  NaN     5.500000        4.000000              4.500000            4.500000       3.500000              NaN                 NaN          3.000000          4.000000
+75%                                  NaN     6.000000        5.000000              5.500000            5.500000       4.500000              NaN                 NaN          4.000000          4.000000
+max                                  NaN     7.000000        7.000000              7.000000            7.000000       7.000000              NaN                 NaN          5.000000          5.000000
+2023-03-19 13:19:41,090 - INFO - 
+Unique values:
+2023-03-19 13:19:41,090 - INFO - userid: 1820
+2023-03-19 13:19:41,090 - INFO -  openness: 13
+2023-03-19 13:19:41,090 - INFO -  agreeableness: 13
+2023-03-19 13:19:41,090 - INFO -  emotional_stability: 13
+2023-03-19 13:19:41,090 - INFO -  conscientiousness: 13
+2023-03-19 13:19:41,090 - INFO -  extraversion: 13
+2023-03-19 13:19:41,090 - INFO -  assigned_metric: 4
+2023-03-19 13:19:41,090 - INFO -  assigned_condition: 4
+2023-03-19 13:19:41,090 - INFO -  is_personalized: 5
+2023-03-19 13:19:41,090 - INFO -  enjoy_watching : 5
+2023-03-19 13:19:41,090 - INFO - 
+Duplicate rows:
+2023-03-19 13:19:41,091 - INFO - No duplicate rows found.
+2023-03-19 13:19:41,091 - INFO - Analyzing movies.csv
+2023-03-19 13:19:41,096 - INFO - Data types and missing values:
+2023-03-19 13:19:41,097 - INFO - <class 'pandas.core.frame.DataFrame'>
+RangeIndex: 9742 entries, 0 to 9741
+Data columns (total 2 columns):
+ #   Column   Non-Null Count  Dtype 
+---  ------   --------------  ----- 
+ 0   movieId  9742 non-null   int64 
+ 1   title    9742 non-null   object
+dtypes: int64(1), object(1)
+memory usage: 152.3+ KB
+
+2023-03-19 13:19:41,097 - INFO - 
+Descriptive statistics:
+2023-03-19 13:19:41,100 - INFO -               movieId        title
+count     9742.000000         9742
+unique            NaN         9737
+top               NaN  Emma (1996)
+freq              NaN            2
+mean     42200.353623          NaN
+std      52160.494854          NaN
+min          1.000000          NaN
+25%       3248.250000          NaN
+50%       7300.000000          NaN
+75%      76232.000000          NaN
+max     193609.000000          NaN
+2023-03-19 13:19:41,101 - INFO - 
+Unique values:
+2023-03-19 13:19:41,101 - INFO - movieId: 9742
+2023-03-19 13:19:41,102 - INFO - title: 9737
+2023-03-19 13:19:41,102 - INFO - 
+Duplicate rows:
+2023-03-19 13:19:41,104 - INFO - No duplicate rows found.
+2023-03-19 13:19:41,104 - INFO - Analyzing personalityPredictedRating.csv
+2023-03-19 13:19:41,109 - INFO - Data types and missing values:
+2023-03-19 13:19:41,112 - INFO - <class 'pandas.core.frame.DataFrame'>
+RangeIndex: 19175 entries, 0 to 19174
+Data columns (total 3 columns):
+ #   Column            Non-Null Count  Dtype  
+---  ------            --------------  -----  
+ 0   userid            19175 non-null  object 
+ 1   movieid           19175 non-null  int64  
+ 2   predicted_rating  19175 non-null  float64
+dtypes: float64(1), int64(1), object(1)
+memory usage: 449.5+ KB
+
+2023-03-19 13:19:41,112 - INFO - 
+Descriptive statistics:
+2023-03-19 13:19:41,115 - INFO -                                   userid        movieid  predicted_rating
+count                              19175   19175.000000      19175.000000
+unique                              1817            NaN               NaN
+top     4638502dc978788ec9d44e64e43a6757            NaN               NaN
+freq                                  99            NaN               NaN
+mean                                 NaN   38460.641356          4.309870
+std                                  NaN   43799.792306          0.375615
+min                                  NaN       1.000000          2.313341
+25%                                  NaN    1288.000000          4.061340
+50%                                  NaN    6870.000000          4.309448
+75%                                  NaN   85342.000000          4.563379
+max                                  NaN  142115.000000          6.585588
+2023-03-19 13:19:41,117 - INFO - 
+Unique values:
+2023-03-19 13:19:41,118 - INFO - userid: 1817
+2023-03-19 13:19:41,118 - INFO - movieid: 2018
+2023-03-19 13:19:41,118 - INFO - predicted_rating: 17769
+2023-03-19 13:19:41,118 - INFO - 
+Duplicate rows:
+2023-03-19 13:19:41,120 - INFO - 142 duplicate rows found:
+2023-03-19 13:19:41,120 - INFO -                                  userid  movieid  predicted_rating
+667    c56613815b9f708eb9df7eb6afd42a49     5618          4.243031
+861    c56613815b9f708eb9df7eb6afd42a49     5971          4.184303
+2450   5e82ce34f999ec0dbd2859b8b04dfcbf     1299          3.857562
+2462   c56613815b9f708eb9df7eb6afd42a49     2329          4.183084
+3071   c56613815b9f708eb9df7eb6afd42a49   104069          4.075614
+...                                 ...      ...               ...
+18480  3e0c0afd46ee7366f328ddf1dae83479     4246          4.489180
+18513  3e0c0afd46ee7366f328ddf1dae83479      588          4.203572
+18702  3e0c0afd46ee7366f328ddf1dae83479      539          4.286892
+18921  3e0c0afd46ee7366f328ddf1dae83479     4447          4.379534
+18926  3e0c0afd46ee7366f328ddf1dae83479     5110          4.790768
+
+[142 rows x 3 columns]
+2023-03-19 13:19:41,122 - INFO - Analyzing imdbActors.csv
+2023-03-19 13:19:41,141 - INFO - Data types and missing values:
+2023-03-19 13:19:41,150 - INFO - <class 'pandas.core.frame.DataFrame'>
+RangeIndex: 37491 entries, 0 to 37490
+Data columns (total 5 columns):
+ #   Column      Non-Null Count  Dtype 
+---  ------      --------------  ----- 
+ 0   imdbId      37491 non-null  int64 
+ 1   ordering    37491 non-null  int64 
+ 2   actor_name  37491 non-null  object
+ 3   category    37491 non-null  object
+ 4   characters  37373 non-null  object
+dtypes: int64(2), object(3)
+memory usage: 1.4+ MB
+
+2023-03-19 13:19:41,150 - INFO - 
+Descriptive statistics:
+2023-03-19 13:19:41,166 - INFO -               imdbId      ordering      actor_name category characters
+count   3.749100e+04  37491.000000           37491    37491      37373
+unique           NaN           NaN           14842        2      28130
+top              NaN           NaN  Robert De Niro    actor   Narrator
+freq             NaN           NaN              61    24410         97
+mean    6.290322e+05      2.584594             NaN      NaN        NaN
+std     1.020388e+06      1.325222             NaN      NaN        NaN
+min     4.170000e+02      1.000000             NaN      NaN        NaN
+25%     9.364000e+04      2.000000             NaN      NaN        NaN
+50%     1.447150e+05      3.000000             NaN      NaN        NaN
+75%     4.917470e+05      4.000000             NaN      NaN        NaN
+max     8.391976e+06     10.000000             NaN      NaN        NaN
+2023-03-19 13:19:41,168 - INFO - 
+Unique values:
+2023-03-19 13:19:41,168 - INFO - imdbId: 9336
+2023-03-19 13:19:41,168 - INFO - ordering: 10
+2023-03-19 13:19:41,171 - INFO - actor_name: 14842
+2023-03-19 13:19:41,172 - INFO - category: 2
+2023-03-19 13:19:41,174 - INFO - characters: 28130
+2023-03-19 13:19:41,174 - INFO - 
+Duplicate rows:
+2023-03-19 13:19:41,180 - INFO - No duplicate rows found.

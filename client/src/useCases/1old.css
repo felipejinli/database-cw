@@ -1,0 +1,13 @@
+.table-container {
+}
+.range-slider {
+    width: 75%;
+}
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.year-range-label {
+    margin-right: 10px;
+  }
