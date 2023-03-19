@@ -1,117 +1,164 @@
 -- postgres/init.sql
 
--- genres
-CREATE TABLE genres (
-  movie_id INTEGER,
-  genre VARCHAR(50),
-  PRIMARY KEY (movie_id, genre)
-);
+-- Start a transaction
+BEGIN;
 
--- imdb_actors
-CREATE TABLE imdb_actors (
-  imdb_id VARCHAR(50),
-  ordering INTEGER,
-  actor_name VARCHAR(255),
-  category VARCHAR(50),
-  characters VARCHAR(255),
-  PRIMARY KEY (imdb_id, ordering)
-);
-
--- imdb_basics
-CREATE TABLE imdb_basics (
-  imdb_id VARCHAR(50) PRIMARY KEY,
-  title_type VARCHAR(50),
-  primary_title VARCHAR(255),
-  original_title VARCHAR(255),
-  start_year INTEGER,
-  runtime_minutes INTEGER
-);
-
--- imdb_directors
-CREATE TABLE imdb_directors (
-  id SERIAL PRIMARY KEY,
-  imdb_id VARCHAR(50),
-  director_name VARCHAR(255)
-);
-
--- links
-CREATE TABLE links (
-  movie_id INTEGER PRIMARY KEY,
-  imdb_id VARCHAR(50),
-  tmdb_id INTEGER
-);
-
--- movies
+-- Create tables
 CREATE TABLE movies (
-  movie_id INTEGER PRIMARY KEY,
-  title VARCHAR(255)
+    movieId SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL
 );
 
--- personality_data
-CREATE TABLE personality_data (
-  user_id INTEGER PRIMARY KEY,
-  openness REAL,
-  agreeableness REAL,
-  emotional_stability REAL,
-  conscientiousness REAL,
-  extraversion REAL,
-  assigned_metric VARCHAR(50),
-  assigned_condition VARCHAR(50),
-  is_personalized BOOLEAN,
-  enjoy_watching REAL
+CREATE TABLE genres (
+    movieId INTEGER REFERENCES movies (movieId),
+    genre VARCHAR(50) NOT NULL,
+    PRIMARY KEY (movieId, genre)
 );
 
--- personality_ratings
-CREATE TABLE personality_ratings (
-  user_id INTEGER,
-  movie_id INTEGER,
-  rating REAL,
-  timestamp INTEGER,
-  PRIMARY KEY (user_id, movie_id),
-  FOREIGN KEY (user_id) REFERENCES personality_data (user_id),
-  FOREIGN KEY (movie_id) REFERENCES movies (movie_id)
+CREATE TABLE links (
+    movieId INTEGER PRIMARY KEY REFERENCES movies (movieId),
+    imdbId INTEGER UNIQUE NOT NULL,
+    tmdbId INTEGER 
 );
 
--- personality_predicted_rating
-CREATE TABLE personality_predicted_rating (
-  user_id INTEGER,
-  movie_id INTEGER,
-  predicted_rating REAL,
-  PRIMARY KEY (user_id, movie_id),
-  FOREIGN KEY (user_id) REFERENCES personality_data (user_id),
-  FOREIGN KEY (movie_id) REFERENCES movies (movie_id)
+CREATE TABLE imdb_basics (
+    imdbId INTEGER PRIMARY KEY REFERENCES links (imdbId),
+    titleType VARCHAR(50),
+    primaryTitle VARCHAR(255) NOT NULL,
+    originalTitle VARCHAR(255) NOT NULL,
+    startYear INTEGER NOT NULL,
+    runtimeMinutes INTEGER
 );
 
--- ratings
+CREATE TABLE imdb_directors (
+    imdbId INTEGER REFERENCES imdb_basics (imdbId),
+    director_name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (imdbId, director_name)
+);
+
+CREATE TABLE imdb_actors (
+    imdbId INTEGER REFERENCES imdb_basics (imdbId),
+    ordering INTEGER NOT NULL,
+    actor_name VARCHAR(255) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    characters VARCHAR(1024),
+    PRIMARY KEY (imdbId, ordering)
+);
+
+CREATE TABLE usersINT (
+    userId INTEGER PRIMARY KEY
+);
+
+CREATE TABLE usersUUID (
+    userId VARCHAR(32) PRIMARY KEY
+);
+
 CREATE TABLE ratings (
-  user_id INTEGER,
-  movie_id INTEGER,
-  rating REAL,
-  timestamp INTEGER,
-  PRIMARY KEY (user_id, movie_id)
+    userId INTEGER REFERENCES usersINT (userId),
+    movieId INTEGER REFERENCES movies (movieId),
+    rating DECIMAL(2,1) NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    PRIMARY KEY (userId, movieId)
 );
 
--- tags
 CREATE TABLE tags (
-  user_id INTEGER,
-  movie_id INTEGER,
-  tag VARCHAR(255),
-  timestamp INTEGER,
-  PRIMARY KEY (user_id, movie_id, tag),
-  FOREIGN KEY (movie_id) REFERENCES movies (movie_id)
+    userId INTEGER REFERENCES usersINT (userId),
+    movieId INTEGER REFERENCES movies (movieId),
+    tag VARCHAR(255) NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    PRIMARY KEY (userId, movieId, tag)
+);
+
+CREATE TABLE personality_data (
+    userId VARCHAR(32) PRIMARY KEY REFERENCES usersUUID (userId),
+    openness DECIMAL(3,1) NOT NULL,
+    agreeableness DECIMAL(3,1) NOT NULL,
+    emotional_stability DECIMAL(3,1) NOT NULL,
+    conscientiousness DECIMAL(3,1) NOT NULL,
+    extraversion DECIMAL(3,1) NOT NULL,
+    assigned_metric VARCHAR(50) NOT NULL,
+    assigned_condition VARCHAR(50) NOT NULL,
+    is_personalized INTEGER NOT NULL,
+    enjoy_watching INTEGER NOT NULL
+);
+
+
+CREATE TABLE personality_ratings (
+    userId VARCHAR(32) REFERENCES usersUUID (userId),
+    movieId INTEGER REFERENCES movies (movieId),
+    rating DECIMAL(2,1) NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    PRIMARY KEY (userId, movieId, timestamp)
+);
+
+CREATE TABLE personality_predicted_ratings (
+    userId VARCHAR(32) REFERENCES usersUUID (userId),
+    movieId INTEGER REFERENCES movies (movieId),
+    predicted_rating DECIMAL(11,10) NOT NULL,
+    PRIMARY KEY (userId, movieId)
+);
+
+-- Extra tables (BEFORE import)
+CREATE TEMP TABLE temp_ratings (
+    userId INTEGER,
+    movieId INTEGER,
+    rating REAL,
+    timestamp INTEGER
+);
+
+CREATE TEMP TABLE temp_tags (
+    userId INTEGER,
+    movieId INTEGER,
+    tag VARCHAR(255),
+    timestamp INTEGER
 );
 
 -- Importing CSV data
-
-COPY genres FROM '/docker-entrypoint-initdb.d/genres.csv' DELIMITER ',' CSV HEADER;
-COPY imdb_actors FROM '/docker-entrypoint-initdb.d/imdbActors.csv' DELIMITER ',' CSV HEADER;
-COPY imdb_basics FROM '/docker-entrypoint-initdb.d/imdbBasics.csv' DELIMITER ',' CSV HEADER;
--- Since some movies can have multiple directors, we defined an id column as a serial primary key but csv file does not have this column.
-COPY imdb_directors(imdb_id, director_name) FROM '/docker-entrypoint-initdb.d/imdbDirectors.csv' DELIMITER ',' CSV HEADER;
-COPY links FROM '/docker-entrypoint-initdb.d/links.csv' DELIMITER ',' CSV HEADER;
 COPY movies FROM '/docker-entrypoint-initdb.d/movies.csv' DELIMITER ',' CSV HEADER;
+COPY genres FROM '/docker-entrypoint-initdb.d/genres.csv' DELIMITER ',' CSV HEADER;
+COPY links FROM '/docker-entrypoint-initdb.d/links.csv' DELIMITER ',' CSV HEADER;
+COPY imdb_basics FROM '/docker-entrypoint-initdb.d/imdbBasics.csv' DELIMITER ',' CSV HEADER;
+COPY imdb_directors FROM '/docker-entrypoint-initdb.d/imdbDirectors.csv' DELIMITER ',' CSV HEADER;
+COPY imdb_actors FROM '/docker-entrypoint-initdb.d/imdbActors.csv' DELIMITER ',' CSV HEADER;
+
+COPY usersINT FROM '/docker-entrypoint-initdb.d/usersINT.csv' DELIMITER ',' CSV HEADER;
+COPY usersUUID FROM '/docker-entrypoint-initdb.d/usersUUID.csv' DELIMITER ',' CSV HEADER;
 COPY personality_data FROM '/docker-entrypoint-initdb.d/personality-data.csv' DELIMITER ',' CSV HEADER;
-COPY personality_ratings FROM '/docker-entrypoint-initdb.d/personality-ratings.csv' DELIMITER ',' CSV HEADER;
-COPY personality_predicted_rating FROM '/docker-entrypoint-initdb.d/personalityPredictedRating.csv' DELIMITER ',' CSV HEADER;
-COPY ratings FROM '/docker-entrypoint-initdb.d/ratings.csv' DELIMITER ',' CSV HEADER;
-COPY tags FROM '/docker-entrypoint-initdb.d/tags.csv' DELIMITER ',' CSV HEADER;
+COPY personality_ratings FROM '/docker-entrypoint-initdb.d/personality-ratings-deduped.csv' DELIMITER ',' CSV HEADER;
+COPY personality_predicted_ratings FROM '/docker-entrypoint-initdb.d/personalityPredictedRating-deduped.csv' DELIMITER ',' CSV HEADER;
+
+-- temp_* is used to convert the epoch timestamp to a normal timestamp
+COPY temp_ratings FROM '/docker-entrypoint-initdb.d/ratings.csv' DELIMITER ',' CSV HEADER;
+COPY temp_tags FROM '/docker-entrypoint-initdb.d/tags.csv' DELIMITER ',' CSV HEADER;
+
+-- Extra tables (AFTER import)
+INSERT INTO ratings (userId, movieId, rating, timestamp)
+SELECT userId, movieId, rating, to_timestamp(timestamp) FROM temp_ratings;
+DROP TABLE temp_ratings;
+
+INSERT INTO tags (userId, movieId, tag, timestamp)
+SELECT userId, movieId, tag, to_timestamp(timestamp) FROM temp_tags;
+DROP TABLE temp_tags;
+
+CREATE TABLE actor_characters (
+  imdbid INTEGER,
+  ordering INTEGER,
+  character_name VARCHAR(255),
+  PRIMARY KEY (imdbid, ordering, character_name),
+  FOREIGN KEY (imdbid, ordering) REFERENCES imdb_actors (imdbid, ordering)
+);
+
+CREATE OR REPLACE FUNCTION populate_actor_characters()
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO actor_characters (imdbid, ordering, character_name)
+    SELECT imdbId, ordering, unnest(string_to_array(characters, ','))
+    FROM imdb_actors
+    WHERE characters IS NOT NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT populate_actor_characters();
+
+-- Commit the transaction
+COMMIT;

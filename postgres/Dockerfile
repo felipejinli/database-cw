@@ -1,5 +1,5 @@
 # postgres/Dockerfile
-FROM postgres:14
+FROM postgres:latest
 
 ENV POSTGRES_USER ucl2023
 ENV POSTGRES_PASSWORD group3
