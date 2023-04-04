@@ -16,14 +16,29 @@ const useSSE = (url, initialState = {}) => {
   useEffect(() => {
     if (!url) return;
 
+    console.log('FJL: creating new EventSource', url);
     const source = new EventSource(url);
+
     source.onmessage = (event) => {
+      console.log('FJL: Entering on message of useSSE');
       const { step, data: eventData } = JSON.parse(event.data);
       setData((prevState) => ({ ...prevState, [step]: eventData }));
     };
 
+    const eventTypes = ['preview_ratings', 'cosine_similarity', 'predicted_rating', 'overall_prediction'];
+
+    eventTypes.forEach((eventType) => {
+      source.addEventListener(eventType, (event) => {
+        console.log(`Received ${eventType} SSE`);
+        const { step, data: eventData } = JSON.parse(event.data);
+        console.log('SSE data: ', step, eventData);
+        setData((prevState) => ({ ...prevState, [step]: eventData }));
+      });
+    });
+
+
     source.onerror = (err) => {
-      console.error(err);
+      console.error('SSE error: ', err);
       source.close();
     };
 
@@ -56,10 +71,8 @@ const UseCase5 = () => {
   const [selectedMovieId, setSelectedMovieId] = useState(null);
   const [numPreviewAudience, setNumPreviewAudience] = useState(null);
   const [overallPredictedRating, setOverallPredictedRating] = useState(null);
+  const [tablesData, setTablesData] = useState({ predictedRating: [], previewRatings: [], cosineSimilarity: [] });
   const [showSteps, setShowSteps] = useState(false);
-  const [predictedRating, setPredictedRating] = useState([]);
-  const [previewRatings, setPreviewRatings] = useState([]);
-  const [cosineSimilarity, setCosineSimilarity] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sseUrl, setSseUrl] = useState(null);
 
@@ -90,104 +103,35 @@ const UseCase5 = () => {
     setShowSteps(checked);
   };
 
-  const renderPreviewRatingsTable = () => {
-    if (!showSteps || !previewRatings) return null;
+
+  const renderTable = (title, data, columns) => {
+    if (!showSteps || !data) return null;
 
     return (
       <div>
-        <h3>Preview Ratings</h3>
-        <Table virtualized bordered cellBordered data={previewRatings}>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>User ID</Table.HeaderCell>
-            <Table.Cell dataKey="user_id" />
-          </Table.Column>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>Movie ID</Table.HeaderCell>
-            <Table.Cell dataKey="movie_id" />
-          </Table.Column>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>Rating</Table.HeaderCell>
-            <Table.Cell dataKey="rating" />
-          </Table.Column>
+        <h3>{title}</h3>
+        <Table virtualized bordered cellBordered data={data}>
+          {columns.map(column => (
+            <Table.Column width={100} align="center" key={column.dataKey}>
+              <Table.HeaderCell>{column.header}</Table.HeaderCell>
+              <Table.Cell dataKey={column.dataKey} />
+            </Table.Column>
+          ))}
         </Table>
       </div>
     );
   };
-
-  const renderCosineSimilarityTable = () => {
-    if (!showSteps || !cosineSimilarity) return null;
-
-    return (
-      <div>
-        <h3>Cosine Similarity</h3>
-        <Table data={cosineSimilarity}>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>Movie ID</Table.HeaderCell>
-            <Table.Cell dataKey="movie_id" />
-          </Table.Column>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>Similar Movie ID</Table.HeaderCell>
-            <Table.Cell dataKey="similar_movie_id" />
-          </Table.Column>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>Similarity</Table.HeaderCell>
-            <Table.Cell dataKey="similarity" />
-          </Table.Column>
-        </Table>
-      </div>
-    );
-  };
-
-  const renderPredictedRatingTable = () => {
-    if (!showSteps || !predictedRating) return null;
-
-    return (
-      <div>
-        <h3>Predicted Rating</h3>
-        <Table virtualized bordered cellBordered data={predictedRating}>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>User ID</Table.HeaderCell>
-            <Table.Cell dataKey="user_id" />
-          </Table.Column>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>Movie ID</Table.HeaderCell>
-            <Table.Cell dataKey="movie_id" />
-          </Table.Column>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>Similar Movie ID</Table.HeaderCell>
-            <Table.Cell dataKey="similar_movie_id" />
-          </Table.Column>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>Rating</Table.HeaderCell>
-            <Table.Cell dataKey="rating" />
-          </Table.Column>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>Similarity</Table.HeaderCell>
-            <Table.Cell dataKey="similarity" />
-          </Table.Column>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>Average Rating</Table.HeaderCell>
-            <Table.Cell dataKey="average_rating" />
-          </Table.Column>
-          <Table.Column width={100} align="center">
-            <Table.HeaderCell>Predicted Rating</Table.HeaderCell>
-            <Table.Cell dataKey="predicted_rating" />
-          </Table.Column>
-        </Table>
-      </div>
-    );
-  };
-
-  useEffect(() => {
-    console.log('FJL: changed loading', loading);
-  }, [loading]);
 
   useEffect(() => {
     if (sseData) {
-      setPreviewRatings(sseData.preview_ratings || []);
-      setCosineSimilarity(sseData.cosine_similarity || []);
-      setPredictedRating(sseData.predicted_rating || []);
-      if (sseData.predicted_rating) {
+      setTablesData({
+        previewRatings: sseData.preview_ratings || [],
+        cosineSimilarity: sseData.cosine_similarity || [],
+        predictedRating: sseData.predicted_rating || [],
+      });
+      if (sseData.overall_prediction) {
+        console.log('FJL: setting overall prediction', sseData.overall_prediction);
+        setOverallPredictedRating(sseData.overall_prediction[0] || null);
         setLoading(false);
       }
     }
@@ -219,10 +163,24 @@ const UseCase5 = () => {
           </Panel>
         )
       }
+      {renderTable('Preview Ratings', tablesData.previewRatings, [
+        { header: 'User ID', dataKey: 'userid' },
+        { header: 'Movie ID', dataKey: 'movieid' },
+        { header: 'Rating', dataKey: 'rating' },
+        { header: 'Centered Rating', dataKey: 'centered_rating' },
+      ])}
 
-      {renderPreviewRatingsTable()}
-      {renderCosineSimilarityTable()}
-      {renderPredictedRatingTable()}
+      {renderTable('Cosine Similarity', tablesData.cosineSimilarity, [
+        { header: 'Preview User', dataKey: 'preview_user' },
+        { header: 'Broader User', dataKey: 'broader_user' },
+        { header: 'Similarity', dataKey: 'similarity' },
+        { header: 'Rank (Most similar)', dataKey: 'rank' },
+      ])}
+
+      {renderTable('Predicted Rating', tablesData.predictedRating, [
+        { header: 'Broader User', dataKey: 'broader_user' },
+        { header: 'Predicted Rating', dataKey: 'predicted_rating' },
+      ])}
     </div >
   );
 };
