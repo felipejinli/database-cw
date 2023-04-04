@@ -11,7 +11,7 @@ const redis = require('redis');
 const asyncRedis = require('async-redis');
 
 //ANCHOR - Settings
-const BATCH_SIZE = 50;
+const BATCH_SIZE = 2;
 
 //ANCHOR - Setting up Redis client for caching
 const redisClient = asyncRedis.createClient({
@@ -26,7 +26,7 @@ redisClient.on('error', (err) => {
 const cacheResults = async (key, expireInSeconds, queryFunction) => {
 	const cachedResults = await redisClient.get(key);
 	if (cachedResults) {
-		console.log('FJL: getting from cache ', key);
+		console.log(`FJL: getting from cache ${key} = ${cachedResults}`);
 		return JSON.parse(cachedResults);
 	}
 	console.log('FJL: not getting from cache ', key);

@@ -21,6 +21,8 @@ const PreviewCountInput = ({ movieId, onPreviewCountChange }) => {
 				toaster.push(<Notification type="error" header="error">Not enough ratings for movie. Must have at least 3 ratings from different users for a meaningful preview audience</Notification>, {
 					placement: 'topCenter'
 				});
+				setUserCount(null);
+				onPreviewCountChange(null);
 				setMaxUsers(0);
 			} else {
 				setMaxUsers(res.data);
@@ -32,19 +34,24 @@ const PreviewCountInput = ({ movieId, onPreviewCountChange }) => {
 
 	const handleChange = (value) => {
 		console.log('FJL3: handleChangeUserCount', value);
-		if (!value) {
-			setUserCount(null)
-		} else if (value < 3) {
+		setUserCount(parseInt(value));
+	};
+
+	const handleBlur = () => {
+		if (userCount < 3) {
 			toaster.push(<Notification type="error" header="error">Invalid input. The input must be between 3 and {maxUsers}. Preview audience size below 3 is inaccurate.</Notification>, {
 				placement: 'topCenter'
 			});
-		} else if (value > maxUsers) {
+			setUserCount(null);
+			onPreviewCountChange(null);
+		} else if (userCount > maxUsers) {
 			toaster.push(<Notification type="error" header="error">The input must be less than {maxUsers}. Can't have preview audience larger than actual ratings we have for given movie.</Notification>, {
 				placement: 'topCenter'
 			});
+			setUserCount(null);
+			onPreviewCountChange(null);
 		} else {
-			setUserCount(value);
-			onPreviewCountChange(value); // pass value up to parent component 
+			onPreviewCountChange(userCount); // pass value up to parent component 
 		}
 	};
 
@@ -54,8 +61,7 @@ const PreviewCountInput = ({ movieId, onPreviewCountChange }) => {
 				<InputNumber
 					value={userCount}
 					onChange={handleChange}
-					min={3}
-					max={maxUsers}
+					onBlur={handleBlur}
 					disabled={!movieId}
 					placeholder={maxUsers ? `Enter a number between 3 and ${maxUsers || ''}` : `Movie doesn't have enough ratings`}
 				/>
