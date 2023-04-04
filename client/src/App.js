@@ -108,11 +108,11 @@ const UseCase5 = () => {
     if (!showSteps || !data) return null;
 
     return (
-      <div>
+      <div style={{ flex: 1, height: '100%', backgroundColor: 'lightgray' }}>
         <h3>{title}</h3>
-        <Table virtualized bordered cellBordered data={data}>
+        <Table virtualized bordered cellBordered data={data} height={800}>
           {columns.map(column => (
-            <Table.Column width={100} align="center" key={column.dataKey}>
+            <Table.Column width={130} align="center" key={column.dataKey}>
               <Table.HeaderCell>{column.header}</Table.HeaderCell>
               <Table.Cell dataKey={column.dataKey} />
             </Table.Column>
@@ -121,6 +121,7 @@ const UseCase5 = () => {
       </div>
     );
   };
+
 
   useEffect(() => {
     if (sseData) {
@@ -163,24 +164,26 @@ const UseCase5 = () => {
           </Panel>
         )
       }
-      {renderTable('Preview Ratings', tablesData.previewRatings, [
-        { header: 'User ID', dataKey: 'userid' },
-        { header: 'Movie ID', dataKey: 'movieid' },
-        { header: 'Rating', dataKey: 'rating' },
-        { header: 'Centered Rating', dataKey: 'centered_rating' },
-      ])}
+      <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'space-between', backgroundColor: 'yellow' }}>
+        {renderTable('Preview Ratings', tablesData.previewRatings, [
+          { header: 'User ID', dataKey: 'userid' },
+          { header: 'Movie ID', dataKey: 'movieid' },
+          { header: 'Rating', dataKey: 'rating' },
+          { header: 'Centered Rating', dataKey: 'centered_rating' },
+        ])}
 
-      {renderTable('Cosine Similarity', tablesData.cosineSimilarity, [
-        { header: 'Preview User', dataKey: 'preview_user' },
-        { header: 'Broader User', dataKey: 'broader_user' },
-        { header: 'Similarity', dataKey: 'similarity' },
-        { header: 'Rank (Most similar)', dataKey: 'rank' },
-      ])}
+        {renderTable('Cosine Similarity', tablesData.cosineSimilarity, [
+          { header: 'Preview User', dataKey: 'preview_user' },
+          { header: 'Broader User', dataKey: 'broader_user' },
+          { header: 'Similarity', dataKey: 'similarity' },
+          { header: 'Rank (Most similar)', dataKey: 'rank' },
+        ])}
 
-      {renderTable('Predicted Rating', tablesData.predictedRating, [
-        { header: 'Broader User', dataKey: 'broader_user' },
-        { header: 'Predicted Rating', dataKey: 'predicted_rating' },
-      ])}
+        {renderTable('Predicted Rating', tablesData.predictedRating, [
+          { header: 'Broader User', dataKey: 'broader_user' },
+          { header: 'Predicted Rating', dataKey: 'predicted_rating' },
+        ])}
+      </div>
     </div >
   );
 };
