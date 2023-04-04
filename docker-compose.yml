@@ -15,9 +15,12 @@ services:
     container_name: nginx
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - client
       - api
+    volumes:
+      - ./certs:/etc/nginx/certs
 
   api:
     build: ./api
@@ -29,6 +32,7 @@ services:
       - redis
     volumes:
      - ./api:/app
+     - ./certs:/app/certs
 
   redis:
     image: "redis:latest"
@@ -44,6 +48,7 @@ services:
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
       - ./postgres:/docker-entrypoint-initdb.d
+      - ./certs:/var/lib/postgresql/certs  
     ports:
       - "5432:5432"
 

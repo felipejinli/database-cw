@@ -93,7 +93,7 @@ WITH      full_preview_audience AS (
 			knn_for_broader_user AS (
 			SELECT    preview_user,
 					  broader_user,
-					  ROUND(similarity, 3),
+					  ROUND(similarity, 3) as similarity,
 					  RANK
 			FROM      cosine_similarity
 			WHERE     RANK <= $2

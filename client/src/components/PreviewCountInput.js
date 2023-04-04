@@ -16,7 +16,7 @@ const PreviewCountInput = ({ movieId, onPreviewCountChange }) => {
 
 	const fetchUserCount = async (movieId) => {
 		try {
-			const res = await axios.get(`http://localhost:80/api/movies/${movieId}/preview-max-count`);
+			const res = await axios.get(`/api/movies/${movieId}/preview-max-count`);
 			if (res.data < 3) {
 				toaster.push(<Notification type="error" header="error">Not enough ratings for movie. Must have at least 3 ratings from different users for a meaningful preview audience</Notification>, {
 					placement: 'topCenter'
@@ -34,8 +34,15 @@ const PreviewCountInput = ({ movieId, onPreviewCountChange }) => {
 
 	const handleChange = (value) => {
 		console.log('FJL3: handleChangeUserCount', value);
-		if (value > 0)
+		if (value > 0) {
 			setUserCount(parseInt(value));
+			onPreviewCountChange(parseInt(value));
+		}
+		else if (value === '') {
+			setUserCount(null);
+			onPreviewCountChange(null);
+		}
+
 	};
 
 	const handleBlur = () => {

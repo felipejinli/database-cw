@@ -1,0 +1,69 @@
+Certificate:
+    Data:
+        Version: 1 (0x0)
+        Serial Number: 16259928879081442583 (0xe1a6df2aaec3cd17)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=gb, ST=london, L=london, O=ucl, OU=cs/emailAddress=zcabfji@ucl.ac.uk
+        Validity
+            Not Before: Apr  4 16:27:01 2023 GMT
+            Not After : Apr  3 16:27:01 2024 GMT
+        Subject: C=gb, ST=london, L=london, O=ucl, OU=cs/emailAddress=zcabfji@ucl.ac.uk
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:cb:15:07:13:f3:b0:40:d9:d7:05:0c:01:e8:c1:
+                    f9:6c:0a:11:94:84:fa:f7:75:c0:c9:42:37:e3:aa:
+                    85:0f:91:7b:53:38:38:48:c8:41:53:2f:78:79:73:
+                    4f:58:a9:eb:40:d2:5a:5f:77:6f:ed:65:f5:be:33:
+                    86:98:1d:3b:ca:d9:12:b7:ad:4d:be:c9:af:da:3d:
+                    ab:6a:65:d9:60:2d:21:9e:44:45:07:9a:ec:36:43:
+                    2c:57:ae:af:6b:34:a8:48:0c:2b:79:f0:44:15:9c:
+                    0d:0f:1c:e9:0b:3b:80:dc:b3:10:05:24:bf:86:2e:
+                    cd:6b:8b:75:28:83:93:ea:9b:be:85:ac:fd:76:32:
+                    54:43:f7:76:77:42:2c:01:0f:e8:27:49:fe:8b:bc:
+                    ff:5d:5b:10:46:23:f3:a0:64:f0:cf:8d:81:51:71:
+                    8f:77:55:02:49:b4:f1:cc:a6:1e:81:ce:f4:a1:1a:
+                    c6:dd:b9:d8:6b:87:d1:81:25:e0:af:51:0e:b8:c7:
+                    54:7e:6a:45:fd:ce:9d:05:31:e9:ab:17:e9:23:09:
+                    9c:a0:1c:14:31:48:14:c8:0c:98:55:78:d0:a5:4a:
+                    af:c1:df:38:59:51:ff:d2:78:25:66:c3:76:6e:94:
+                    38:75:49:84:8e:fd:23:24:f3:ad:43:ca:ba:b1:81:
+                    f4:07
+                Exponent: 65537 (0x10001)
+    Signature Algorithm: sha256WithRSAEncryption
+         6f:14:f6:e0:22:d4:60:01:cb:82:b1:a0:df:a7:0f:70:87:3b:
+         12:28:d5:cf:e3:eb:32:b4:93:ee:e5:49:9f:03:39:32:03:bb:
+         6e:1b:15:d3:4d:cb:7b:94:0b:10:f3:fb:30:70:d5:66:e8:dc:
+         89:1d:99:aa:b1:12:19:5d:63:dc:9a:65:96:90:0b:a3:fb:11:
+         79:a3:7e:e7:68:04:dd:0e:6a:b4:20:15:88:6e:40:e1:0a:05:
+         6e:ce:b0:39:5e:1f:f4:dd:03:62:ea:b2:99:ff:59:b9:df:07:
+         a0:77:7a:fe:b3:7f:b1:fd:cb:0b:04:20:02:2f:d4:37:ca:64:
+         26:8c:16:f9:b4:08:5e:05:3b:34:88:3a:1b:9b:11:f0:15:6a:
+         94:ef:67:db:b4:87:ec:39:5c:4c:63:2b:40:62:8d:af:0c:93:
+         ba:e9:fe:f4:fb:89:f8:1b:ae:9a:cb:11:18:f4:f4:29:e4:ab:
+         c9:44:bc:5f:4a:dd:c6:56:20:8a:f5:8a:8a:ab:d3:85:40:74:
+         83:11:86:e1:29:f7:99:cd:ec:9f:90:ff:21:8a:0b:d6:16:4f:
+         d6:39:43:3a:8e:32:80:12:93:7c:85:ca:8c:7a:91:7c:63:5c:
+         d3:7c:cf:3f:bd:91:f8:89:fd:4b:7c:e0:bc:79:35:2b:63:c6:
+         c2:ff:82:bf
+-----BEGIN CERTIFICATE-----
+MIIDVDCCAjwCCQDhpt8qrsPNFzANBgkqhkiG9w0BAQsFADBsMQswCQYDVQQGEwJn
+YjEPMA0GA1UECAwGbG9uZG9uMQ8wDQYDVQQHDAZsb25kb24xDDAKBgNVBAoMA3Vj
+bDELMAkGA1UECwwCY3MxIDAeBgkqhkiG9w0BCQEWEXpjYWJmamlAdWNsLmFjLnVr
+MB4XDTIzMDQwNDE2MjcwMVoXDTI0MDQwMzE2MjcwMVowbDELMAkGA1UEBhMCZ2Ix
+DzANBgNVBAgMBmxvbmRvbjEPMA0GA1UEBwwGbG9uZG9uMQwwCgYDVQQKDAN1Y2wx
+CzAJBgNVBAsMAmNzMSAwHgYJKoZIhvcNAQkBFhF6Y2FiZmppQHVjbC5hYy51azCC
+ASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMsVBxPzsEDZ1wUMAejB+WwK
+EZSE+vd1wMlCN+OqhQ+Re1M4OEjIQVMveHlzT1ip60DSWl93b+1l9b4zhpgdO8rZ
+EretTb7Jr9o9q2pl2WAtIZ5ERQea7DZDLFeur2s0qEgMK3nwRBWcDQ8c6Qs7gNyz
+EAUkv4YuzWuLdSiDk+qbvoWs/XYyVEP3dndCLAEP6CdJ/ou8/11bEEYj86Bk8M+N
+gVFxj3dVAkm08cymHoHO9KEaxt252GuH0YEl4K9RDrjHVH5qRf3OnQUx6asX6SMJ
+nKAcFDFIFMgMmFV40KVKr8HfOFlR/9J4JWbDdm6UOHVJhI79IyTzrUPKurGB9AcC
+AwEAATANBgkqhkiG9w0BAQsFAAOCAQEAbxT24CLUYAHLgrGg36cPcIc7EijVz+Pr
+MrST7uVJnwM5MgO7bhsV003Le5QLEPP7MHDVZujciR2ZqrESGV1j3JpllpALo/sR
+eaN+52gE3Q5qtCAViG5A4QoFbs6wOV4f9N0DYuqymf9Zud8HoHd6/rN/sf3LCwQg
+Ai/UN8pkJowW+bQIXgU7NIg6G5sR8BVqlO9n27SH7DlcTGMrQGKNrwyTuun+9PuJ
++BuumssRGPT0KeSryUS8X0rdxlYgivWKiqvThUB0gxGG4Sn3mc3sn5D/IYoL1hZP
+1jlDOo4ygBKTfIXKjHqRfGNc03zPP72R+In9S3zgvHk1K2PGwv+Cvw==
+-----END CERTIFICATE-----

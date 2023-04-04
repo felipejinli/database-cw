@@ -9,6 +9,7 @@ const path = require('path');
 const compression = require('compression');
 const redis = require('redis');
 const asyncRedis = require('async-redis');
+const fs = require('fs');
 
 //ANCHOR - Settings
 const BATCH_SIZE = 2;
@@ -49,7 +50,13 @@ const pool = new Pool({
 	user: 'ucl2023',
 	password: 'group3',
 	database: 'movielens',
-	port: 5432
+	port: 5432,
+	ssl: {
+		rejectUnauthorized: false,
+		ca: fs.readFileSync("./certs/server.crt").toString(),
+		key: fs.readFileSync("./certs/server.key").toString(),
+		cert: fs.readFileSync("./certs/server.crt").toString(),
+	},
 });
 
 

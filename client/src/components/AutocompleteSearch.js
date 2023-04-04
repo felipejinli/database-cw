@@ -16,7 +16,7 @@ const AutocompleteSearch = ({ onMovieSelect }) => {
 
 	const fetchMovies = async (search) => {
 		try {
-			const res = await axios.get(`http://localhost:80/api/movies/search?search=${search}`);
+			const res = await axios.get(`/api/movies/search?search=${search}`);
 			console.log('FJL: enter fetchMovies', search);
 			setMovies(res.data);
 		} catch (err) {

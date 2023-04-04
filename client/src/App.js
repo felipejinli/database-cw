@@ -83,11 +83,11 @@ const UseCase5 = () => {
     setLoading(true);
 
     if (showSteps) {
-      setSseUrl(`http://localhost:80/api/movies/${selectedMovieId}/predicted-rating-with-steps/${numPreviewAudience}`);
+      setSseUrl(`/api/movies/${selectedMovieId}/predicted-rating-with-steps/${numPreviewAudience}`);
     } else {
       (async () => {
         try {
-          const res = await axios.get(`http://localhost:80/api/movies/${selectedMovieId}/predicted-rating/${numPreviewAudience}`);
+          const res = await axios.get(`/api/movies/${selectedMovieId}/predicted-rating/${numPreviewAudience}`);
           setOverallPredictedRating(res.data);
         } catch (err) {
           console.error(err);
@@ -152,9 +152,9 @@ const UseCase5 = () => {
       <Button
         appearance="primary"
         onClick={fetchPredictedRating}
-        disabled={!selectedMovieId || !numPreviewAudience || loading}
+        disabled={!selectedMovieId || !numPreviewAudience || loading || numPreviewAudience < 3}
       >
-        {loading ? 'Loading...' : 'Search'}
+        {loading ? 'Loading...' : `Search ${numPreviewAudience}`}
       </Button>
       {
         overallPredictedRating && (
