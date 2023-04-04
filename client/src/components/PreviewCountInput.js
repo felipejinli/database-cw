@@ -34,7 +34,8 @@ const PreviewCountInput = ({ movieId, onPreviewCountChange }) => {
 
 	const handleChange = (value) => {
 		console.log('FJL3: handleChangeUserCount', value);
-		setUserCount(parseInt(value));
+		if (value > 0)
+			setUserCount(parseInt(value));
 	};
 
 	const handleBlur = () => {

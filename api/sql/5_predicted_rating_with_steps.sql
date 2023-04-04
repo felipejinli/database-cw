@@ -20,7 +20,7 @@ WITH      full_preview_audience AS (
 			SELECT    DISTINCT r.userId,
 					  r.movieId,
 					  r.rating,
-					  r.rating - ua.average_rating AS centered_rating
+					  ROUND(r.rating - ua.average_rating, 3) AS centered_rating
 			FROM      ratings r
 			JOIN      user_averages ua ON r.userId = ua.userId
 			WHERE     r.userId IN (
@@ -93,7 +93,7 @@ WITH      full_preview_audience AS (
 			knn_for_broader_user AS (
 			SELECT    preview_user,
 					  broader_user,
-					  similarity,
+					  ROUND(similarity, 3),
 					  RANK
 			FROM      cosine_similarity
 			WHERE     RANK <= $2
