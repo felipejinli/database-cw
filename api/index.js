@@ -7,9 +7,33 @@ const pgp = require('pg-promise')();
 const QueryFile = pgp.QueryFile;
 const path = require('path');
 const compression = require('compression');
+const redis = require('redis');
+const asyncRedis = require('async-redis');
 
 //ANCHOR - Settings
 const BATCH_SIZE = 50;
+
+//ANCHOR - Setting up Redis client for caching
+const redisClient = asyncRedis.createClient({
+	host: 'redis', // This should match the service name in docker-compose.yml
+	port: 6379
+});
+
+redisClient.on('error', (err) => {
+	console.error('Error connecting to Redis:', err);
+});
+
+const cacheResults = async (key, expireInSeconds, queryFunction) => {
+	const cachedResults = await redisClient.get(key);
+	if (cachedResults) {
+		console.log('FJL: getting from cache ', key);
+		return JSON.parse(cachedResults);
+	}
+	console.log('FJL: not getting from cache ', key);
+	const results = await queryFunction();
+	await redisClient.setex(key, expireInSeconds, JSON.stringify(results));
+	return results;
+};
 
 //ANCHOR - Express with middleware configurations
 const app = express();
@@ -34,49 +58,76 @@ const predictRatingsQuery = new QueryFile(path.join(__dirname, 'sql', '5_predict
 const predictRatingsWithStepsQuery = new QueryFile(path.join(__dirname, 'sql', '5_predicted_rating_with_steps.sql'), { minify: true });
 
 
-//ANCHOR - API endpoints
+//SECTION - API endpoints
 app.get('/api/movies', async (req, res) => {
 	try {
-		const { rows } = await pool.query('SELECT * FROM movies;');
-		console.log('FJL: hitting api endpoint /api/movies');
+		// NOTE: cacheKey='all_movies'; expireInSeconds=60*60; means that the results will be cached for 1 hour
+		const rows = await cacheResults('all_movies', 60 * 60, async () => {
+			const result = await pool.query('SELECT * FROM movies;');
+			return result.rows;
+		});
+
 		res.status(200).json(rows);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
 	}
 });
 
+
+//ANCHOR - UseCase 5 - Predicted Rating
 app.get('/api/movies/search', async (req, res) => {
 	try {
 		const { search } = req.query;
-		console.log('searching for movie: ', search);
-		const { rows } = await pool.query('SELECT * FROM movies WHERE title ILIKE $1 LIMIT 10', [`%${search}%`]);
+
+		const rows = await cacheResults(`movie_search:${search}`, 60 * 30, async () => {
+			const result = await pool.query('SELECT * FROM movies WHERE title ILIKE $1 LIMIT 10', [`%${search}%`]);
+			return result.rows;
+		});
+
 		res.status(200).json(rows);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
 	}
 });
 
+
 app.get('/api/movies/:movieId/preview-max-count', async (req, res) => {
-	console.log('FJL: hitting api endpoint /api/movies/:movieId/preview-max-count');
 	try {
 		const { movieId } = req.params;
-		const { rows } = await pool.query('SELECT COUNT(*) as num_ratings FROM ratings WHERE movieId = $1', [movieId]);
-		res.status(200).json(rows[0].num_ratings);
+		const cacheKey = `preview-max-count:${movieId}`;
+		const expireInSeconds = 60 * 60; // 1 hour
+
+		const numRatings = await cacheResults(cacheKey, expireInSeconds, async () => {
+			const result = await pool.query('SELECT COUNT(*) as num_ratings FROM ratings WHERE movieId = $1', [movieId]);
+			return result.rows[0].num_ratings;
+		});
+		res.status(200).json(numRatings);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
 	}
 });
+
 
 app.get('/api/movies/:movieId/predicted-rating/:previewSize', async (req, res) => {
 	try {
 		const { movieId, previewSize } = req.params;
-		const { rows } = await pool.query(pgp.as.format(predictRatingsQuery, [movieId, previewSize]));
 
-		res.status(200).json(rows[0]);
+		const cacheKey = `predicted-rating:${movieId}:${previewSize}`;
+		const expireInSeconds = 60 * 30; // 30 minutes
+
+		const queryFunction = async () => {
+			const { rows } = await pool.query(pgp.as.format(predictRatingsQuery, [movieId, previewSize]));
+			return rows[0];
+		};
+
+		const result = await cacheResults(cacheKey, expireInSeconds, queryFunction);
+
+		res.status(200).json(result);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
 	}
 });
+
 
 app.get('/api/movies/:movieId/predicted-rating-with-steps/:previewSize', async (req, res) => {
 	try {
@@ -118,6 +169,7 @@ app.get('/api/movies/:movieId/predicted-rating-with-steps/:previewSize', async (
 		res.status(500).json({ error: err.message });
 	}
 });
+//!SECTION
 
 
 

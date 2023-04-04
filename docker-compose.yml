@@ -10,6 +10,14 @@ services:
       - "3000:3000"
     volumes:
       - ./client/src:/app/src
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - client
+      - api
 
   api:
     build: ./api
@@ -18,8 +26,17 @@ services:
       - "3001:3001"
     depends_on:
       - postgres
+      - redis
     volumes:
      - ./api:/app
+
+  redis:
+    image: "redis:latest"
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
 
   postgres:
     build: ./postgres
@@ -30,14 +47,6 @@ services:
     ports:
       - "5432:5432"
 
-  nginx:
-    build: ./nginx
-    container_name: nginx
-    ports:
-      - "80:80"
-    depends_on:
-      - client
-      - api
 
 volumes:
   postgres-data:
