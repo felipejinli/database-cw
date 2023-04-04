@@ -25,10 +25,12 @@ services:
   api:
     build: ./api
     container_name: api
+    environment:
+      - DATABASE_URL=postgres://ucl2023:group3@postgres_coordinator:5432/movielens
     ports:
       - "3001:3001"
     depends_on:
-      - postgres
+      - postgres_coordinator
       - redis
     volumes:
      - ./api:/app
@@ -42,15 +44,52 @@ services:
     volumes:
       - ./redis-data:/data
 
-  postgres:
+  postgres_coordinator:
     build: ./postgres
-    container_name: postgres
+    container_name: postgres_coordinator
+    environment:
+      - POSTGRES_USER=ucl2023
+      - POSTGRES_PASSWORD=group3
+      - POSTGRES_DB=movielens
+      - NODE_TYPE=coordinator
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
       - ./postgres:/docker-entrypoint-initdb.d
       - ./certs:/var/lib/postgresql/certs  
     ports:
       - "5432:5432"
+
+  postgres_worker_1:
+    build: ./postgres
+    container_name: postgres_worker_1
+    environment:
+      - POSTGRES_USER=ucl2023
+      - POSTGRES_PASSWORD=group3
+      - POSTGRES_DB=movielens
+      - NODE_TYPE=worker
+      - COORDINATOR_HOST=postgres_coordinator
+    volumes:
+      - ./postgres/data_worker:/var/lib/postgresql/data
+      - ./postgres:/docker-entrypoint-initdb.d
+      - ./certs:/var/lib/postgresql/certs
+    depends_on:
+      - postgres_coordinator
+
+  postgres_worker_2:
+    build: ./postgres
+    container_name: postgres_worker_2
+    environment:
+      - POSTGRES_USER=ucl2023
+      - POSTGRES_PASSWORD=group3
+      - POSTGRES_DB=movielens
+      - NODE_TYPE=worker
+      - COORDINATOR_HOST=postgres_coordinator
+    volumes:
+      - ./postgres/data_worker_2:/var/lib/postgresql/data
+      - ./postgres:/docker-entrypoint-initdb.d
+      - ./certs:/var/lib/postgresql/certs
+    depends_on:
+      - postgres_coordinator
 
 
 volumes:

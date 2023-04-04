@@ -1,4 +1,5 @@
 -- postgres/init.sql
+CREATE EXTENSION IF NOT EXISTS citus;
 
 -- Start a transaction
 BEGIN;
@@ -159,6 +160,12 @@ END;
 $$ LANGUAGE plpgsql;
 
 SELECT populate_actor_characters();
+
+-- Distribute tables (for scaling with Citus)
+SELECT create_distributed_table('ratings', 'userId');
+SELECT create_distributed_table('tags', 'userId');
+SELECT create_distributed_table('personality_ratings', 'userId');
+SELECT create_distributed_table('personality_predicted_ratings', 'userId');
 
 -- Commit the transaction
 COMMIT;
